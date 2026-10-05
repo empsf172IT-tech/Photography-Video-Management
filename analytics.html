@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics & Insights | ChromaIQ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            500: '#14b8a6',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Global Header -->
+    <header class="glass-header fixed w-full top-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 relative">
+                <!-- Logo -->
+                <div class="flex-1 flex justify-start">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl group-hover:shadow-lg transition-all">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="font-bold text-xl tracking-tight">ChromaIQ</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
+                    <a href="index.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Home</a>
+                    <a href="analytics.html" class="nav-link active text-sm font-medium">Analytics</a>
+                    <a href="reports.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Reports</a>
+                    <a href="login.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Log in</a>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="hidden md:flex flex-1 justify-end items-center gap-6">
+                    <button class="theme-toggle p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle Theme">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <a href="dashboard.html" class="btn-primary px-5 py-2.5 rounded-full text-sm font-medium flex items-center gap-2">
+                        Dashboard <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4 md:hidden">
+                    <button class="theme-toggle p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 -mr-2 text-gray-600 dark:text-gray-300">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-[#0a0a0b] border-t border-gray-200 dark:border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="index.html" class="block px-3 py-3 font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md">Home</a>
+                <a href="analytics.html" class="block px-3 py-3 font-medium rounded-md bg-gray-50 dark:bg-gray-900">Analytics</a>
+                <a href="reports.html" class="block px-3 py-3 font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md">Reports</a>
+                    <a href="login.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Log in</a>
+                <a href="dashboard.html" class="block px-3 py-3 font-medium text-white bg-indigo-600 rounded-md text-center mt-2">Go to Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Section 1: Analytics Hero -->
+        <section class="relative min-h-[500px] flex items-center justify-center pt-24 pb-20 overflow-hidden border-b border-gray-200 dark:border-gray-800">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2070" alt="Analytics Background" class="w-full h-full object-cover object-center transform scale-125 md:scale-110 pointer-events-none">
+                <div class="absolute inset-0 bg-white/70 dark:bg-[#0a0a0b]/80 pointer-events-none"></div>
+                <div class="absolute top-0 left-1/2 w-[1000px] h-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-b from-indigo-500/10 to-transparent dark:from-indigo-500/20 blur-3xl pointer-events-none"></div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center fade-up w-full">
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">Operational Intelligence</h1>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
+                    Turn production chaos into clear, actionable data. Understand team bandwidth, delivery metrics, and production efficiency in real-time.
+                </p>
+                
+                <div class="inline-flex bg-white dark:bg-[#0a0a0b] border border-gray-200 dark:border-gray-800 rounded-lg p-1 shadow-sm">
+                    <button class="px-4 py-2 rounded-md bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 text-sm font-medium">Overview</button>
+                    <button class="px-4 py-2 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors">Team Performance</button>
+                    <button class="px-4 py-2 rounded-md text-gray-500 hover:text-gray-900 dark:hover:text-white text-sm font-medium transition-colors">Financials</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Performance Overview -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center mb-8 fade-up">
+                    <h2 class="text-2xl font-bold">Key Performance Indicators</h2>
+                    <select class="bg-transparent border border-gray-300 dark:border-gray-700 rounded-md py-1.5 pl-3 pr-8 text-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option>Last 30 Days</option>
+                        <option>This Quarter</option>
+                        <option>Year to Date</option>
+                    </select>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 fade-up">
+                    <div class="card p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600">
+                                <i class="ph ph-briefcase text-xl"></i>
+                            </div>
+                            <span class="flex items-center text-sm font-medium text-green-600"><i class="ph ph-trend-up mr-1"></i> +12.5%</span>
+                        </div>
+                        <h3 class="text-gray-500 text-sm font-medium mb-1">Total Projects</h3>
+                        <div class="text-3xl font-bold">2,845</div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-green-50 dark:bg-green-900/30 text-green-600">
+                                <i class="ph ph-check-circle text-xl"></i>
+                            </div>
+                            <span class="flex items-center text-sm font-medium text-green-600"><i class="ph ph-trend-up mr-1"></i> +4.2%</span>
+                        </div>
+                        <h3 class="text-gray-500 text-sm font-medium mb-1">Completed Shoots</h3>
+                        <div class="text-3xl font-bold">2,110</div>
+                    </div>
+
+                    <div class="card p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-yellow-50 dark:bg-yellow-900/30 text-yellow-600">
+                                <i class="ph ph-clock text-xl"></i>
+                            </div>
+                            <span class="flex items-center text-sm font-medium text-red-500"><i class="ph ph-trend-down mr-1"></i> -1.5%</span>
+                        </div>
+                        <h3 class="text-gray-500 text-sm font-medium mb-1">Avg. Turnaround (Days)</h3>
+                        <div class="text-3xl font-bold">4.2</div>
+                    </div>
+
+                    <div class="card p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600">
+                                <i class="ph ph-currency-dollar text-xl"></i>
+                            </div>
+                            <span class="flex items-center text-sm font-medium text-green-600"><i class="ph ph-trend-up mr-1"></i> +22.4%</span>
+                        </div>
+                        <h3 class="text-gray-500 text-sm font-medium mb-1">Operational Value</h3>
+                        <div class="text-3xl font-bold">$1.2M</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Production Analytics (Charts) -->
+        <section class="py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="card p-6 col-span-1 lg:col-span-2 fade-up">
+                        <h3 class="text-lg font-bold mb-6">Production Volume Trends</h3>
+                        <div class="w-full h-72">
+                            <canvas id="volumeChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6 col-span-1 fade-up">
+                        <h3 class="text-lg font-bold mb-6">Delivery Performance</h3>
+                        <div class="w-full h-64 flex justify-center">
+                            <canvas id="deliveryChart"></canvas>
+                        </div>
+                        <div class="mt-4 grid grid-cols-2 gap-4 text-center text-sm">
+                            <div>
+                                <div class="font-bold text-lg text-indigo-500">65%</div>
+                                <div class="text-gray-500">Early</div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-lg text-purple-500">30%</div>
+                                <div class="text-gray-500">On Time</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Automated Performance Intelligence -->
+        <section class="py-16 bg-gray-50 dark:bg-[#121214] border-y border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-10 fade-up">
+                    <h2 class="text-2xl font-bold mb-2">Automated Insights</h2>
+                    <p class="text-gray-600 dark:text-gray-400">AI-generated observations based on your recent operational data.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-6 border-l-4 border-l-green-500 fade-up">
+                        <div class="flex items-center gap-3 mb-3">
+                            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=100" alt="Efficiency" class="w-6 h-6 rounded-md object-cover">
+                            <h4 class="font-semibold">Efficiency Gain</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Post-production times for Studio A have decreased by 15% this month, saving approximately 40 hours of editing time.</p>
+                    </div>
+
+                    <div class="card p-6 border-l-4 border-l-yellow-500 fade-up" style="transition-delay: 100ms;">
+                        <div class="flex items-center gap-3 mb-3">
+                            <img src="https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&q=80&w=100" alt="Alert" class="w-6 h-6 rounded-md object-cover">
+                            <h4 class="font-semibold">Bottleneck Alert</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Client review cycles for 'Enterprise Video' category are averaging 6 days longer than standard thresholds.</p>
+                    </div>
+
+                    <div class="card p-6 border-l-4 border-l-indigo-500 fade-up" style="transition-delay: 200ms;">
+                        <div class="flex items-center gap-3 mb-3">
+                            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=100" alt="Resources" class="w-6 h-6 rounded-md object-cover">
+                            <h4 class="font-semibold">Resource Recommendation</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Based on upcoming scheduled shoots next week, allocate 2 additional freelance editors to maintain SLAs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Analytics Comparison -->
+        <section class="py-16 mb-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-up">
+                <h2 class="text-2xl font-bold mb-8">Team Performance Comparison</h2>
+                
+                <div class="card overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 text-sm font-medium text-gray-500">
+                                    <th class="py-4 px-6">Team / Department</th>
+                                    <th class="py-4 px-6">Projects Completed</th>
+                                    <th class="py-4 px-6">Avg. Delivery Time</th>
+                                    <th class="py-4 px-6">Client Rating</th>
+                                    <th class="py-4 px-6 text-right">Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-800 text-sm">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                    <td class="py-4 px-6 font-medium">Product Photography</td>
+                                    <td class="py-4 px-6">145</td>
+                                    <td class="py-4 px-6">2.1 Days</td>
+                                    <td class="py-4 px-6">
+                                        <div class="flex text-yellow-400"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i></div>
+                                    </td>
+                                    <td class="py-4 px-6 text-right text-green-500"><i class="ph ph-trend-up"></i></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                    <td class="py-4 px-6 font-medium">Corporate Video</td>
+                                    <td class="py-4 px-6">32</td>
+                                    <td class="py-4 px-6">14.5 Days</td>
+                                    <td class="py-4 px-6">
+                                        <div class="flex text-yellow-400"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph ph-star"></i></div>
+                                    </td>
+                                    <td class="py-4 px-6 text-right text-gray-400"><i class="ph ph-minus"></i></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+                                    <td class="py-4 px-6 font-medium">Event Coverage</td>
+                                    <td class="py-4 px-6">84</td>
+                                    <td class="py-4 px-6">5.2 Days</td>
+                                    <td class="py-4 px-6">
+                                        <div class="flex text-yellow-400"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                                    </td>
+                                    <td class="py-4 px-6 text-right text-red-500"><i class="ph ph-trend-down"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-white dark:bg-[#0a0a0b] border-t border-gray-200 dark:border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="font-bold text-lg tracking-tight">ChromaIQ</span>
+                    </a>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                        Enterprise-grade operations and analytics software for professional photography and video production teams.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-x-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-youtube-logo text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Product</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="analytics.html" class="hover:text-indigo-500 transition-colors">Analytics</a></li>
+                        <li><a href="reports.html" class="hover:text-indigo-500 transition-colors">Reporting</a></li>
+                        <li><a href="dashboard.html" class="hover:text-indigo-500 transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Resources</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">API Reference</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>&copy; 2026 ChromaIQ Technologies. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <span>System Status: <span class="text-green-500">All Operational</span></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors" aria-label="Back to top">
+        <i class="ph-bold ph-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+    <script>
+        // Charts Initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            const getColors = () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                return {
+                    text: isDark ? '#9ca3af' : '#6b7280',
+                    grid: isDark ? '#27272a' : '#e5e7eb',
+                };
+            };
+
+            const initCharts = () => {
+                const colors = getColors();
+                
+                // Volume Chart
+                const ctxVolume = document.getElementById('volumeChart');
+                if (ctxVolume) {
+                    new Chart(ctxVolume, {
+                        type: 'line',
+                        data: {
+                            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                            datasets: [{
+                                label: 'Photography',
+                                data: [65, 78, 90, 81, 105, 120],
+                                borderColor: '#6366f1',
+                                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }, {
+                                label: 'Video',
+                                data: [28, 40, 35, 50, 48, 65],
+                                borderColor: '#a855f7',
+                                tension: 0.4
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: { legend: { labels: { color: colors.text } } },
+                            scales: {
+                                x: { grid: { color: colors.grid }, ticks: { color: colors.text } },
+                                y: { grid: { color: colors.grid }, ticks: { color: colors.text } }
+                            }
+                        }
+                    });
+                }
+
+                // Delivery Chart
+                const ctxDelivery = document.getElementById('deliveryChart');
+                if (ctxDelivery) {
+                    new Chart(ctxDelivery, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Early', 'On Time', 'Late'],
+                            datasets: [{
+                                data: [65, 30, 5],
+                                backgroundColor: ['#6366f1', '#a855f7', '#ef4444'],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutout: '75%',
+                            plugins: {
+                                legend: { position: 'bottom', labels: { color: colors.text } }
+                            }
+                        }
+                    });
+                }
+            };
+
+            initCharts();
+            
+            // Re-init charts on theme toggle to update colors (simplified for static demo)
+            const toggles = document.querySelectorAll('.theme-toggle');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    setTimeout(() => {
+                        Chart.helpers.each(Chart.instances, function(instance) {
+                            const colors = getColors();
+                            instance.options.plugins.legend.labels.color = colors.text;
+                            if (instance.options.scales) {
+                                instance.options.scales.x.grid.color = colors.grid;
+                                instance.options.scales.x.ticks.color = colors.text;
+                                instance.options.scales.y.grid.color = colors.grid;
+                                instance.options.scales.y.ticks.color = colors.text;
+                            }
+                            instance.update();
+                        });
+                    }, 50);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

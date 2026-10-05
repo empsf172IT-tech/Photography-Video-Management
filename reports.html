@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Operations | ChromaIQ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            500: '#14b8a6',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white">
+
+    <!-- Global Header -->
+    <header class="glass-header fixed w-full top-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 relative">
+                <!-- Logo -->
+                <div class="flex-1 flex justify-start">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl group-hover:shadow-lg transition-all">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="font-bold text-xl tracking-tight">ChromaIQ</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
+                    <a href="index.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Home</a>
+                    <a href="analytics.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Analytics</a>
+                    <a href="reports.html" class="nav-link active text-sm font-medium">Reports</a>
+                    <a href="login.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Log in</a>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="hidden md:flex flex-1 justify-end items-center gap-6">
+                    <button class="theme-toggle p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle Theme">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <a href="dashboard.html" class="btn-primary px-5 py-2.5 rounded-full text-sm font-medium flex items-center gap-2">
+                        Dashboard <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4 md:hidden">
+                    <button class="theme-toggle p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 -mr-2 text-gray-600 dark:text-gray-300">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-[#0a0a0b] border-t border-gray-200 dark:border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="index.html" class="block px-3 py-3 font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md">Home</a>
+                <a href="analytics.html" class="block px-3 py-3 font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md">Analytics</a>
+                <a href="reports.html" class="block px-3 py-3 font-medium rounded-md bg-gray-50 dark:bg-gray-900">Reports</a>
+                    <a href="login.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Log in</a>
+                <a href="dashboard.html" class="block px-3 py-3 font-medium text-white bg-indigo-600 rounded-md text-center mt-2">Go to Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Section 1: Reports Hero -->
+        <section class="py-20 border-b border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-up">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-medium mb-6">
+                            <i class="ph ph-file-pdf"></i> Automated Reporting
+                        </div>
+                        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">Distill complex operations into board-ready reports.</h1>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+                            Generate, schedule, and distribute comprehensive operational insights automatically. Keep stakeholders informed without manual data entry.
+                        </p>
+                        <div class="flex gap-4">
+                            <button class="btn-primary px-6 py-3 rounded-md font-medium">Create Report</button>
+                            <button class="btn-secondary px-6 py-3 rounded-md font-medium flex items-center gap-2"><i class="ph ph-sliders"></i> Filters</button>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-up relative">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl blur opacity-30"></div>
+                        <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=2076" alt="Report Data Visualization" class="relative rounded-xl w-full h-[400px] border border-gray-200 dark:border-gray-800 object-cover shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Report Templates -->
+        <section class="py-16 bg-gray-50 dark:bg-[#121214]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-2xl font-bold mb-8 fade-up">Standard Report Templates</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="card p-6 fade-up">
+                        <div class="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center mb-4">
+                            <i class="ph ph-file-text text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Production Summary</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">High-level overview of completed projects and volume.</p>
+                        <button class="w-full py-2 border border-gray-200 dark:border-gray-700 rounded text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">Generate</button>
+                    </div>
+
+                    <div class="card p-6 fade-up" style="transition-delay: 100ms;">
+                        <div class="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/30 text-purple-600 flex items-center justify-center mb-4">
+                            <i class="ph ph-chart-line-up text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Project Performance</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Detailed breakdown of margins, delays, and milestones.</p>
+                        <button class="w-full py-2 border border-gray-200 dark:border-gray-700 rounded text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">Generate</button>
+                    </div>
+
+                    <div class="card p-6 fade-up" style="transition-delay: 200ms;">
+                        <div class="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/30 text-green-600 flex items-center justify-center mb-4">
+                            <i class="ph ph-users text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Team Productivity</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Resource utilization and individual throughput metrics.</p>
+                        <button class="w-full py-2 border border-gray-200 dark:border-gray-700 rounded text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">Generate</button>
+                    </div>
+
+                    <div class="card p-6 fade-up" style="transition-delay: 300ms;">
+                        <div class="w-10 h-10 rounded-lg bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 flex items-center justify-center mb-4">
+                            <i class="ph ph-star text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-lg mb-2">Client Delivery</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">SLA compliance, feedback cycles, and satisfaction metrics.</p>
+                        <button class="w-full py-2 border border-gray-200 dark:border-gray-700 rounded text-sm font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Export & Automation -->
+        <section class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-up">
+                <div class="bg-indigo-900 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between text-white shadow-xl">
+                    <div class="md:w-1/2 mb-8 md:mb-0">
+                        <h2 class="text-3xl font-bold mb-4">Put reporting on autopilot.</h2>
+                        <p class="text-indigo-200 mb-6 text-lg">Schedule weekly PDF summaries for executives or monthly CSV exports for your finance team. ChromaIQ handles the heavy lifting.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Scheduled Email Delivery</li>
+                            <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> Custom Date Ranges</li>
+                            <li class="flex items-center gap-3"><i class="ph-bold ph-check text-green-400"></i> API & Webhook Exports</li>
+                        </ul>
+                    </div>
+                    <div class="md:w-1/3 w-full bg-indigo-950 p-6 rounded-xl border border-indigo-700">
+                        <h4 class="font-semibold mb-4 border-b border-indigo-800 pb-2">New Schedule</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-xs text-indigo-300 block mb-1">Report Type</label>
+                                <div class="bg-indigo-900 rounded px-3 py-2 text-sm border border-indigo-700">Production Summary</div>
+                            </div>
+                            <div>
+                                <label class="text-xs text-indigo-300 block mb-1">Frequency</label>
+                                <div class="bg-indigo-900 rounded px-3 py-2 text-sm border border-indigo-700 flex justify-between">Every Monday <i class="ph ph-caret-down"></i></div>
+                            </div>
+                            <button class="w-full bg-indigo-500 hover:bg-indigo-600 transition text-white py-2 rounded text-sm font-medium mt-2">Save Automation</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Operational Control Center -->
+        <section class="py-16 bg-gray-50 dark:bg-[#121214] border-t border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-up">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-bold">Priority Operations</h2>
+                    <a href="dashboard.html" class="text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">Open Full Command Center</a>
+                </div>
+                
+                <div class="card overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 text-sm font-medium text-gray-500">
+                                <th class="py-4 px-6">Project Action</th>
+                                <th class="py-4 px-6">Assignee</th>
+                                <th class="py-4 px-6">Status</th>
+                                <th class="py-4 px-6">Deadline</th>
+                                <th class="py-4 px-6"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-800 text-sm">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                <td class="py-4 px-6 font-medium">Review: Fall Lookbook Final Cuts</td>
+                                <td class="py-4 px-6 flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex justify-center items-center text-xs font-bold">AK</div> Alex K.
+                                </td>
+                                <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 text-xs font-medium">Pending Approval</span></td>
+                                <td class="py-4 px-6 text-red-500 font-medium">Today</td>
+                                <td class="py-4 px-6 text-right"><button class="text-indigo-600 hover:underline">Review</button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                <td class="py-4 px-6 font-medium">Allocate Equipment: NYC Shoot</td>
+                                <td class="py-4 px-6 flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex justify-center items-center text-xs font-bold">SJ</div> Sarah J.
+                                </td>
+                                <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-full bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 text-xs font-medium">Delayed</span></td>
+                                <td class="py-4 px-6">Tomorrow</td>
+                                <td class="py-4 px-6 text-right"><button class="text-indigo-600 hover:underline">Manage</button></td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                <td class="py-4 px-6 font-medium">Client Hand-off: Tech Conference</td>
+                                <td class="py-4 px-6 flex items-center gap-2">
+                                    <div class="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex justify-center items-center text-xs font-bold">MR</div> Mike R.
+                                </td>
+                                <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs font-medium">In Progress</span></td>
+                                <td class="py-4 px-6">Oct 12</td>
+                                <td class="py-4 px-6 text-right"><button class="text-indigo-600 hover:underline">View</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Access & Permissions -->
+        <section class="py-16 mb-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-up">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-bold mb-4">Enterprise-Grade Access Control</h2>
+                    <p class="text-gray-600 dark:text-gray-400">Keep assets secure and workflows clean with granular role-based permissions.</p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="card p-5 text-center">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
+                            <i class="ph ph-shield-check text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Admin</h4>
+                        <p class="text-xs text-gray-500">Full system access, billing, and settings.</p>
+                    </div>
+                    <div class="card p-5 text-center">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
+                            <i class="ph ph-users-three text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Manager</h4>
+                        <p class="text-xs text-gray-500">Approve projects, view all analytics.</p>
+                    </div>
+                    <div class="card p-5 text-center">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
+                            <i class="ph ph-camera text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Creative</h4>
+                        <p class="text-xs text-gray-500">Upload media, update task status.</p>
+                    </div>
+                    <div class="card p-5 text-center">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center mb-3">
+                            <i class="ph ph-eye text-xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-sm mb-1">Client/Viewer</h4>
+                        <p class="text-xs text-gray-500">View deliverables and add comments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-white dark:bg-[#0a0a0b] border-t border-gray-200 dark:border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="font-bold text-lg tracking-tight">ChromaIQ</span>
+                    </a>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                        Enterprise-grade operations and analytics software for professional photography and video production teams.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-x-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-youtube-logo text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Product</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="analytics.html" class="hover:text-indigo-500 transition-colors">Analytics</a></li>
+                        <li><a href="reports.html" class="hover:text-indigo-500 transition-colors">Reporting</a></li>
+                        <li><a href="dashboard.html" class="hover:text-indigo-500 transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Resources</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">API Reference</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>&copy; 2026 ChromaIQ Technologies. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <span>System Status: <span class="text-green-500">All Operational</span></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors" aria-label="Back to top">
+        <i class="ph-bold ph-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChromaIQ | Visual Operations Intelligence</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            500: '#14b8a6',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Favicon placeholder -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Global Header -->
+    <header class="glass-header fixed w-full top-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20 relative">
+                <!-- Logo -->
+                <div class="flex-1 flex justify-start">
+                    <a href="index.html" class="flex items-center gap-2 group">
+                        <div class="w-8 h-8 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl group-hover:shadow-lg transition-all">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="font-bold text-xl tracking-tight">ChromaIQ</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center gap-8">
+                    <a href="index.html" class="nav-link active text-sm font-medium">Home</a>
+                    <a href="analytics.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Analytics</a>
+                    <a href="reports.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Reports</a>
+                    <a href="login.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Log in</a>
+                </nav>
+
+                <!-- Right Actions -->
+                <div class="hidden md:flex flex-1 justify-end items-center gap-6">
+                    <button class="theme-toggle p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle Theme">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <a href="dashboard.html" class="btn-primary px-5 py-2.5 rounded-full text-sm font-medium flex items-center gap-2">
+                        Dashboard <i class="ph ph-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center gap-4 md:hidden">
+                    <button class="theme-toggle p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 -mr-2 text-gray-600 dark:text-gray-300">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-[#0a0a0b] border-t border-gray-200 dark:border-gray-800">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="index.html" class="block px-3 py-3 font-medium rounded-md bg-gray-50 dark:bg-gray-900">Home</a>
+                <a href="analytics.html" class="block px-3 py-3 font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md">Analytics</a>
+                <a href="reports.html" class="block px-3 py-3 font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-md">Reports</a>
+                    <a href="login.html" class="nav-link text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">Log in</a>
+                <a href="dashboard.html" class="block px-3 py-3 font-medium text-white bg-indigo-600 rounded-md text-center mt-2">Go to Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20">
+        <!-- Section 1: Hero -->
+        <section class="relative pt-24 pb-32 overflow-hidden">
+            <!-- Background Decoration with Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&q=80&w=2000" alt="Studio Background" class="w-full h-full object-cover pointer-events-none">
+                <div class="absolute inset-0 bg-white/70 dark:bg-[#0a0a0b]/80 pointer-events-none"></div>
+                <div class="absolute top-0 left-1/2 w-[1000px] h-[1000px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-b from-indigo-500/10 to-transparent dark:from-indigo-500/20 blur-3xl pointer-events-none"></div>
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center fade-up">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-medium mb-8 border border-indigo-100 dark:border-indigo-800/50">
+                    <span class="flex h-2 w-2 relative">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                    </span>
+                    Introducing ChromaIQ 2.0
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-tight">
+                    Visual Operations. <br />
+                    <span class="text-gradient">Intelligently Managed.</span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto mb-12 font-light leading-relaxed">
+                    The single workspace to command your photography and video productions. Unify media pipelines, automate reporting, and measure operational performance instantly.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="analytics.html" class="btn-primary w-full sm:w-auto px-8 py-4 rounded-full text-lg font-medium flex items-center justify-center gap-2">
+                        Explore Analytics <i class="ph ph-chart-line-up"></i>
+                    </a>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Section 2: Visual Operations Overview -->
+        <section class="py-24 bg-gray-50 dark:bg-[#121214]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Orchestrate Media Production</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400">Track active shoots, monitor delivery pipelines, and manage team workloads from a centralized command center built for creative operations.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="card p-8 fade-up" style="transition-delay: 100ms;">
+                        <img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&q=80&w=600" alt="Active Productions" class="w-full h-40 object-cover rounded-xl mb-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                        <h3 class="text-xl font-semibold mb-3">Active Productions</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Monitor real-time status of all photography and video shoots across multiple locations and teams.</p>
+                        <ul class="space-y-3 text-sm">
+                            <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Location Tracking</li>
+                            <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Equipment Allocation</li>
+                            <li class="flex items-center gap-2"><i class="ph-fill ph-check-circle text-green-500"></i> Schedule Syncing</li>
+                        </ul>
+                    </div>
+
+                    <!-- Feature Card 2 -->
+                    <div class="card p-8 fade-up" style="transition-delay: 200ms;">
+                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" alt="Resource Management" class="w-full h-40 object-cover rounded-xl mb-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                        <h3 class="text-xl font-semibold mb-3">Resource Management</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Optimize your team's bandwidth. Assign editors, photographers, and directors based on real-time availability.</p>
+                        <div class="space-y-3 mt-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span>Editing Team Capacity</span>
+                                <span class="font-medium">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                <div class="bg-purple-500 h-1.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Feature Card 3 -->
+                    <div class="card p-8 fade-up" style="transition-delay: 300ms;">
+                        <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&q=80&w=600" alt="Asset Delivery" class="w-full h-40 object-cover rounded-xl mb-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                        <h3 class="text-xl font-semibold mb-3">Asset Delivery</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">Track the final mile of production. Monitor client reviews, revisions, and final asset handoffs seamlessly.</p>
+                        <div class="flex items-center gap-3 p-3 bg-white dark:bg-[#0a0a0b] rounded-lg border border-gray-100 dark:border-gray-800">
+                            <i class="ph-fill ph-check-circle text-green-500 text-xl"></i>
+                            <div>
+                                <div class="text-sm font-medium">Summer Campaign</div>
+                                <div class="text-xs text-gray-500">Delivered 2 hours ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Intelligent Metrics -->
+        <section class="py-24 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="fade-up">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Performance Intelligence built for Creative Teams</h2>
+                        <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">Stop guessing your margins and efficiency. ChromaIQ automatically calculates production metrics, turnaround times, and team performance, transforming operations into actionable data.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex gap-4">
+                                <div class="mt-1 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                                    <i class="ph ph-trend-up"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold mb-1">Efficiency Tracking</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Measure average days from shoot to delivery across different project types.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="mt-1 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                                    <i class="ph ph-chart-bar"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-lg font-semibold mb-1">Volume Analytics</h4>
+                                    <p class="text-gray-600 dark:text-gray-400">Understand seasonal demands and output volume by team or location.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 fade-up" style="transition-delay: 200ms;">
+                        <div class="card p-6 col-span-2">
+                            <div class="flex justify-between items-center mb-4">
+                                <h4 class="font-medium text-sm text-gray-500">Avg. Turnaround Time</h4>
+                                <span class="text-green-500 text-xs font-medium flex items-center"><i class="ph ph-arrow-down-right"></i> 12%</span>
+                            </div>
+                            <div class="text-3xl font-bold mb-2">3.4 Days</div>
+                            <div class="w-full h-16 flex items-end gap-1 opacity-80">
+                                <div class="bg-indigo-200 dark:bg-indigo-900/50 w-full rounded-t-sm" style="height: 60%"></div>
+                                <div class="bg-indigo-200 dark:bg-indigo-900/50 w-full rounded-t-sm" style="height: 75%"></div>
+                                <div class="bg-indigo-200 dark:bg-indigo-900/50 w-full rounded-t-sm" style="height: 50%"></div>
+                                <div class="bg-indigo-200 dark:bg-indigo-900/50 w-full rounded-t-sm" style="height: 85%"></div>
+                                <div class="bg-indigo-500 w-full rounded-t-sm" style="height: 40%"></div>
+                            </div>
+                        </div>
+                        <div class="card p-6">
+                            <h4 class="font-medium text-sm text-gray-500 mb-2">Completion Rate</h4>
+                            <div class="text-2xl font-bold mb-4">98.2%</div>
+                            <div class="relative w-16 h-16">
+                                <svg class="w-full h-full transform -rotate-90">
+                                    <circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" class="text-gray-200 dark:text-gray-800" stroke-width="6" />
+                                    <circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" class="text-indigo-500" stroke-width="6" stroke-dasharray="175" stroke-dashoffset="3" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="card p-6">
+                            <h4 class="font-medium text-sm text-gray-500 mb-2">Active Projects</h4>
+                            <div class="text-2xl font-bold mb-4">142</div>
+                            <div class="flex items-center gap-2 text-sm text-gray-500">
+                                <span class="w-2 h-2 rounded-full bg-green-500"></span> 110 On Track
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                                <span class="w-2 h-2 rounded-full bg-yellow-500"></span> 32 At Risk
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Workflow Intelligence -->
+        <section class="py-24 bg-indigo-900 text-white relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-indigo-800/50 blur-3xl mix-blend-screen pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full bg-purple-800/30 blur-3xl mix-blend-screen pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center fade-up">
+                <h2 class="text-3xl md:text-5xl font-bold mb-16">The Connected Production Pipeline</h2>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4 relative">
+                    <!-- Connecting Line -->
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-indigo-700/50 -translate-y-1/2 z-0"></div>
+
+                    <!-- Step 1 -->
+                    <div class="relative z-10 bg-indigo-950 p-6 rounded-2xl border border-indigo-700/50 w-full md:w-1/4 shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1516961642265-531546e84af2?auto=format&fit=crop&q=80&w=200" alt="Capture" class="w-full h-32 rounded-xl object-cover mb-6 border border-indigo-700/50 shadow-lg">
+                        <h3 class="font-semibold text-lg mb-2">Capture</h3>
+                        <p class="text-indigo-200 text-sm">Briefs and scheduling</p>
+                    </div>
+
+                    <i class="ph-bold ph-caret-right text-indigo-400 text-2xl md:hidden"></i>
+
+                    <!-- Step 2 -->
+                    <div class="relative z-10 bg-indigo-950 p-6 rounded-2xl border border-indigo-700/50 w-full md:w-1/4 shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1618044733300-9472054094ee?auto=format&fit=crop&q=80&w=200" alt="Organize" class="w-full h-32 rounded-xl object-cover mb-6 border border-indigo-700/50 shadow-lg">
+                        <h3 class="font-semibold text-lg mb-2">Organize</h3>
+                        <p class="text-indigo-200 text-sm">Asset management</p>
+                    </div>
+
+                    <i class="ph-bold ph-caret-right text-indigo-400 text-2xl md:hidden"></i>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 bg-indigo-950 p-6 rounded-2xl border border-indigo-500 w-full md:w-1/4 shadow-xl transform md:-translate-y-4">
+                        <div class="absolute -top-3 -right-3 w-6 h-6 bg-green-500 rounded-full border-2 border-indigo-950"></div>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=200" alt="Analyze" class="w-full h-32 rounded-xl object-cover mb-6 border-2 border-indigo-400 shadow-[0_0_15px_rgba(129,140,248,0.5)]">
+                        <h3 class="font-semibold text-lg mb-2">Analyze</h3>
+                        <p class="text-indigo-100 text-sm">Performance metrics</p>
+                    </div>
+
+                    <i class="ph-bold ph-caret-right text-indigo-400 text-2xl md:hidden"></i>
+
+                    <!-- Step 4 -->
+                    <div class="relative z-10 bg-indigo-950 p-6 rounded-2xl border border-indigo-700/50 w-full md:w-1/4 shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=200" alt="Report" class="w-full h-32 rounded-xl object-cover mb-6 border border-indigo-700/50 shadow-lg">
+                        <h3 class="font-semibold text-lg mb-2">Report</h3>
+                        <p class="text-indigo-200 text-sm">Automated insights</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Why ChromaIQ / CTA -->
+        <section class="py-32">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8">Ready to elevate your studio operations?</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-12">
+                    Join leading global production agencies using ChromaIQ to manage assets, analyze efficiency, and deliver reports from one premium workspace.
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <i class="ph-bold ph-check text-indigo-500 text-2xl"></i>
+                        <span class="font-medium text-sm">Centralized Operations</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <i class="ph-bold ph-check text-indigo-500 text-2xl"></i>
+                        <span class="font-medium text-sm">Automated Analytics</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <i class="ph-bold ph-check text-indigo-500 text-2xl"></i>
+                        <span class="font-medium text-sm">Exportable Reports</span>
+                    </div>
+                    <div class="flex flex-col items-center justify-center gap-3">
+                        <i class="ph-bold ph-check text-indigo-500 text-2xl"></i>
+                        <span class="font-medium text-sm">Role-based Access</span>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="dashboard.html" class="btn-primary px-8 py-4 rounded-full text-lg font-medium">Start Your Workspace</a>
+                    <a href="analytics.html" class="btn-secondary px-8 py-4 rounded-full text-lg font-medium">View Capabilities</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="bg-white dark:bg-[#0a0a0b] border-t border-gray-200 dark:border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="font-bold text-lg tracking-tight">ChromaIQ</span>
+                    </a>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                        Enterprise-grade operations and analytics software for professional photography and video production teams.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-linkedin-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-x-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-instagram-logo text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"><i class="ph-fill ph-youtube-logo text-xl"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Product</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="analytics.html" class="hover:text-indigo-500 transition-colors">Analytics</a></li>
+                        <li><a href="reports.html" class="hover:text-indigo-500 transition-colors">Reporting</a></li>
+                        <li><a href="dashboard.html" class="hover:text-indigo-500 transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Integrations</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Resources</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">API Reference</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-sm uppercase tracking-wider">Company</h4>
+                    <ul class="space-y-3 text-sm text-gray-500 dark:text-gray-400">
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-indigo-500 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+                <p>&copy; 2026 ChromaIQ Technologies. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <span>System Status: <span class="text-green-500">All Operational</span></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" class="w-12 h-12 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg hover:bg-indigo-700 transition-colors" aria-label="Back to top">
+        <i class="ph-bold ph-arrow-up"></i>
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+

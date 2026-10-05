@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | ChromaIQ</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdfa',
+                            500: '#14b8a6',
+                            900: '#134e4a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="antialiased selection:bg-indigo-500 selection:text-white bg-gray-50 dark:bg-[#0a0a0b] h-screen overflow-hidden">
+
+    <!-- LOGIN STATE -->
+    <div id="login-view" class="hidden">
+        <div class="w-full max-w-md">
+            <div class="text-center mb-10">
+                <a href="index.html" class="inline-flex items-center gap-2 mb-6 group">
+                    <div class="w-10 h-10 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                        <i class="ph ph-aperture"></i>
+                    </div>
+                </a>
+                <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome back to ChromaIQ</h1>
+                <p class="text-gray-500 mt-2">Sign in to your workspace</p>
+            </div>
+
+            <div class="card p-8 shadow-xl">
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email address</label>
+                        <input type="email" value="admin@studio.com" required class="w-full px-4 py-2 bg-gray-50 dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors">
+                    </div>
+                    
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
+                            <a href="#" class="text-xs text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Forgot password?</a>
+                        </div>
+                        <input type="password" value="password123" required class="w-full px-4 py-2 bg-gray-50 dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors">
+                    </div>
+
+                    <div class="flex items-center">
+                        <input id="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Remember me for 30 days</label>
+                    </div>
+
+                    <button type="submit" class="w-full btn-primary py-2.5 rounded-lg font-medium flex justify-center items-center">
+                        Sign In
+                    </button>
+
+                    <div class="relative my-6">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white dark:bg-[#121214] text-gray-500">Or continue with</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="w-full bg-white dark:bg-[#121214] border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 py-2.5 rounded-lg font-medium flex justify-center items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                        <i class="ph-fill ph-google-logo text-xl"></i> Google SSO
+                    </button>
+                </form>
+            </div>
+            
+            <p class="text-center text-sm text-gray-500 mt-8">
+                Don't have a workspace? <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Create an account</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- DASHBOARD WORKSPACE (Initially hidden) -->
+    <div id="dashboard-view" class=" h-screen flex overflow-hidden">
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white dark:bg-[#121214] border-r border-gray-200 dark:border-gray-800 flex flex-col transition-transform duration-300 flex-shrink-0 z-30 absolute md:relative -translate-x-full md:translate-x-0 h-full" id="sidebar">
+            <div class="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-800 shrink-0 justify-between">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs">
+                        <i class="ph ph-aperture"></i>
+                    </div>
+                    <span class="font-bold tracking-tight">ChromaIQ</span>
+                </a>
+                <button id="close-sidebar" class="md:hidden text-gray-500"><i class="ph ph-x text-lg"></i></button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Platform</div>
+                <a href="#" data-target="overview" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-medium text-sm">
+                    <i class="ph ph-squares-four text-lg"></i> Overview
+                </a>
+
+                
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3 mt-6">Operations</div>
+                <a href="#" data-target="team" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-sm"><i class="ph ph-users text-lg"></i> Team</a>
+                <a href="#" data-target="media" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-sm"><i class="ph ph-image text-lg"></i> Media Library</a>
+                <a href="#" data-target="access" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-sm"><i class="ph ph-shield-check text-lg"></i> Access Control</a>
+                <a href="#" data-target="activity" class="sidebar-link flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-sm"><i class="ph ph-activity text-lg"></i> Activity</a>
+            </div>
+
+            <div class="p-4 border-t border-gray-200 dark:border-gray-800 shrink-0">
+                <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors font-medium text-sm">
+                    <i class="ph ph-gear text-lg"></i> Settings
+                </a>
+                <button id="logout-btn" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors font-medium text-sm mt-1">
+                    <i class="ph ph-sign-out text-lg"></i> Log out
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col min-w-0">
+            <!-- Topbar -->
+            <header class="h-16 bg-white dark:bg-[#121214] border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-4 sm:px-6 shrink-0 z-20">
+                <div class="flex items-center gap-4">
+                    <button id="open-sidebar" class="md:hidden text-gray-500 hover:text-gray-900 dark:hover:text-white">
+                        <i class="ph ph-list text-2xl"></i>
+                    </button>
+                    <!-- Global Search -->
+                    <div class="relative hidden sm:block">
+                        <i class="ph ph-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                        <input type="text" placeholder="Search projects, media..." class="pl-9 pr-4 py-1.5 bg-gray-50 dark:bg-[#0a0a0b] border border-gray-200 dark:border-gray-800 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 w-64">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 sm:gap-5">
+                    <button class="theme-toggle text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors">
+                        <i class="ph ph-moon text-xl dark:hidden"></i>
+                        <i class="ph ph-sun text-xl hidden dark:block"></i>
+                    </button>
+                    <button class="text-gray-500 hover:text-gray-900 dark:hover:text-white transition-colors relative">
+                        <i class="ph ph-bell text-xl"></i>
+                        <span class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white dark:border-[#121214]"></span>
+                    </button>
+                    <div class="h-8 w-8 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm border border-indigo-200 cursor-pointer">
+                        AD
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Scrollable Area -->
+            <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+                <div id="view-overview" class="view-section">
+                
+                <!-- Section 1: Command Center -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4 fade-up">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Overview</h1>
+                        <p class="text-sm text-gray-500">Welcome back, Admin. Here's what's happening today.</p>
+                    </div>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <select class="bg-white dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-md py-2 px-3 text-sm focus:outline-none shadow-sm flex-1 sm:flex-none">
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
+                        </select>
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+                            <i class="ph ph-plus"></i> New Project
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Section 2: KPI Overview -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 fade-up" style="transition-delay: 100ms;">
+                    <div class="card p-5">
+                        <h3 class="text-gray-500 text-sm font-medium mb-2">Active Projects</h3>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold">24</div>
+                            <span class="text-green-500 text-sm font-medium flex items-center"><i class="ph ph-trend-up mr-1"></i> 2</span>
+                        </div>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="text-gray-500 text-sm font-medium mb-2">Pending Deliveries</h3>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold">12</div>
+                            <span class="text-red-500 text-sm font-medium flex items-center"><i class="ph ph-trend-up mr-1"></i> 4</span>
+                        </div>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="text-gray-500 text-sm font-medium mb-2">Avg Turnaround</h3>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold">3.2<span class="text-lg text-gray-400 font-normal ml-1">d</span></div>
+                            <span class="text-green-500 text-sm font-medium flex items-center"><i class="ph ph-trend-down mr-1"></i> 15%</span>
+                        </div>
+                    </div>
+                    <div class="card p-5">
+                        <h3 class="text-gray-500 text-sm font-medium mb-2">Production Efficiency</h3>
+                        <div class="flex items-end justify-between">
+                            <div class="text-3xl font-bold">94%</div>
+                            <span class="text-green-500 text-sm font-medium flex items-center"><i class="ph ph-trend-up mr-1"></i> 1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Performance Analytics -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 fade-up" style="transition-delay: 200ms;">
+                    <div class="card p-6 col-span-1 lg:col-span-2">
+                        <h3 class="text-lg font-semibold mb-4">Volume Output</h3>
+                        <div class="h-64">
+                            <canvas id="dashBarChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card p-6 col-span-1 flex flex-col">
+                        <h3 class="text-lg font-semibold mb-4">Task Completion</h3>
+                        <div class="flex-1 flex items-center justify-center relative">
+                            <div class="absolute inset-0 flex items-center justify-center flex-col">
+                                <span class="text-3xl font-bold">78%</span>
+                                <span class="text-xs text-gray-500">Completed</span>
+                            </div>
+                            <canvas id="dashDonutChart" class="max-h-48"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 4: Project Monitor Table -->
+                <div class="card mb-8 overflow-hidden fade-up" style="transition-delay: 300ms;">
+                    <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+                        <h3 class="text-lg font-semibold">Active Productions</h3>
+                        <button class="text-sm text-indigo-600 font-medium hover:underline">View All</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse whitespace-nowrap">
+                            <thead>
+                                <tr class="bg-gray-50/50 dark:bg-gray-900/50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th class="py-3 px-6">Project Name</th>
+                                    <th class="py-3 px-6">Client</th>
+                                    <th class="py-3 px-6">Stage</th>
+                                    <th class="py-3 px-6">Team</th>
+                                    <th class="py-3 px-6">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-800 text-sm">
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                    <td class="py-3 px-6 font-medium">Summer Campaign Lookbook</td>
+                                    <td class="py-3 px-6 text-gray-500">Vogue Int.</td>
+                                    <td class="py-3 px-6">Post-Production</td>
+                                    <td class="py-3 px-6">
+                                        <div class="flex -space-x-2">
+                                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex justify-center items-center text-xs font-bold border-2 border-white dark:border-[#121214]">AK</div>
+                                            <div class="w-6 h-6 rounded-full bg-green-100 text-green-600 flex justify-center items-center text-xs font-bold border-2 border-white dark:border-[#121214]">MJ</div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6"><span class="px-2 py-1 rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400 text-xs font-medium">In Review</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                    <td class="py-3 px-6 font-medium">Q4 Product Launch Video</td>
+                                    <td class="py-3 px-6 text-gray-500">TechCorp</td>
+                                    <td class="py-3 px-6">Shooting</td>
+                                    <td class="py-3 px-6">
+                                        <div class="flex -space-x-2">
+                                            <div class="w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex justify-center items-center text-xs font-bold border-2 border-white dark:border-[#121214]">SJ</div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6"><span class="px-2 py-1 rounded bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-xs font-medium">On Track</span></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                    <td class="py-3 px-6 font-medium">Executive Headshots 2026</td>
+                                    <td class="py-3 px-6 text-gray-500">Finance Group</td>
+                                    <td class="py-3 px-6">Delivery</td>
+                                    <td class="py-3 px-6">
+                                        <div class="flex -space-x-2">
+                                            <div class="w-6 h-6 rounded-full bg-gray-100 text-gray-600 flex justify-center items-center text-xs font-bold border-2 border-white dark:border-[#121214]">RL</div>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6"><span class="px-2 py-1 rounded bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 text-xs font-medium">Completed</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Section 5: Activity & Access Control -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 fade-up" style="transition-delay: 400ms;">
+                    <div class="card p-6">
+                        <div class="flex justify-between items-center mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">
+                            <h3 class="text-lg font-semibold">Recent Activity</h3>
+                            <button class="text-sm text-indigo-600 font-medium">View All</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex gap-3">
+                                <div class="mt-0.5 text-indigo-500"><i class="ph-fill ph-check-circle text-lg"></i></div>
+                                <div>
+                                    <p class="text-sm"><span class="font-medium">Alex K.</span> approved final assets for <span class="font-medium">Summer Campaign</span></p>
+                                    <span class="text-xs text-gray-500">10 mins ago</span>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <div class="mt-0.5 text-blue-500"><i class="ph-fill ph-file-arrow-down text-lg"></i></div>
+                                <div>
+                                    <p class="text-sm"><span class="font-medium">System</span> auto-generated <span class="font-medium">Weekly Performance Report</span></p>
+                                    <span class="text-xs text-gray-500">2 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-6">
+                        <div class="flex justify-between items-center mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">
+                            <h3 class="text-lg font-semibold">Access Changes</h3>
+                            <button class="text-sm text-indigo-600 font-medium">Manage</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-3 items-center">
+                                    <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-bold">FP</div>
+                                    <div>
+                                        <p class="text-sm font-medium">Freelancer Portal</p>
+                                        <p class="text-xs text-gray-500">Role: Contributor</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">Granted today</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex gap-3 items-center">
+                                    <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-xs font-bold">CL</div>
+                                    <div>
+                                        <p class="text-sm font-medium">Client Review Link</p>
+                                        <p class="text-xs text-gray-500">Role: Viewer (Expiring)</p>
+                                    </div>
+                                </div>
+                                <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded">Revoked yst.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                            </div>
+                
+                <div id="view-team" class="view-section hidden fade-up">
+                    <div class="flex justify-between items-center mb-8">
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Team Directory</h1>
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+                            <i class="ph ph-user-plus"></i> Invite Member
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Card 1 -->
+                        <div class="card p-6 flex flex-col items-center text-center">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80" alt="Sarah J." class="w-20 h-20 rounded-full mb-4 border-2 border-indigo-100 object-cover shadow-sm">
+                            <h3 class="font-semibold text-lg text-gray-900 dark:text-white">Sarah Jenkins</h3>
+                            <p class="text-sm text-gray-500 mb-4">Lead Photographer</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full mb-4">Active</span>
+                            <div class="flex gap-2 w-full mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <button class="flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 font-medium py-1">Message</button>
+                                <button class="flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 font-medium py-1 border-l border-gray-100 dark:border-gray-800">Profile</button>
+                            </div>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="card p-6 flex flex-col items-center text-center">
+                            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=150&q=80" alt="David M." class="w-20 h-20 rounded-full mb-4 border-2 border-indigo-100 object-cover shadow-sm">
+                            <h3 class="font-semibold text-lg text-gray-900 dark:text-white">David Miller</h3>
+                            <p class="text-sm text-gray-500 mb-4">Video Editor</p>
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-medium rounded-full mb-4">Active</span>
+                            <div class="flex gap-2 w-full mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <button class="flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 font-medium py-1">Message</button>
+                                <button class="flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 font-medium py-1 border-l border-gray-100 dark:border-gray-800">Profile</button>
+                            </div>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="card p-6 flex flex-col items-center text-center">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80" alt="Emily R." class="w-20 h-20 rounded-full mb-4 border-2 border-indigo-100 object-cover shadow-sm">
+                            <h3 class="font-semibold text-lg text-gray-900 dark:text-white">Emily Ross</h3>
+                            <p class="text-sm text-gray-500 mb-4">Art Director</p>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 text-xs font-medium rounded-full mb-4">Offline</span>
+                            <div class="flex gap-2 w-full mt-auto pt-4 border-t border-gray-100 dark:border-gray-800">
+                                <button class="flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 font-medium py-1">Message</button>
+                                <button class="flex-1 text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 font-medium py-1 border-l border-gray-100 dark:border-gray-800">Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-media" class="view-section hidden fade-up">
+                    <div class="flex justify-between items-center mb-8">
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Media Library</h1>
+                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium shadow-sm transition-colors flex items-center gap-2">
+                            <i class="ph ph-upload-simple"></i> Upload Assets
+                        </button>
+                    </div>
+                    
+                    <div class="flex gap-4 mb-6">
+                        <input type="text" placeholder="Search files..." class="px-4 py-2 bg-white dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-lg text-sm flex-1 focus:ring-2 focus:ring-indigo-500 outline-none">
+                        <select class="px-4 py-2 bg-white dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-lg text-sm outline-none">
+                            <option>All Types</option>
+                            <option>Images</option>
+                            <option>Videos</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div class="group relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-square">
+                            <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Media 1">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+                                <div class="flex justify-end">
+                                    <button class="text-white hover:text-red-400 transition-colors"><i class="ph-fill ph-trash text-lg"></i></button>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium text-sm truncate">Sony_Alpha_01.raw</p>
+                                    <p class="text-gray-300 text-xs">24.5 MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-square">
+                            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Media 2">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+                                <div class="flex justify-end">
+                                    <button class="text-white hover:text-red-400 transition-colors"><i class="ph-fill ph-trash text-lg"></i></button>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium text-sm truncate">Vintage_Lens_02.jpg</p>
+                                    <p class="text-gray-300 text-xs">4.2 MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-square">
+                            <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Media 3">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
+                                <div class="flex justify-end">
+                                    <button class="text-white hover:text-red-400 transition-colors"><i class="ph-fill ph-trash text-lg"></i></button>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium text-sm truncate">Studio_Setup_A.mp4</p>
+                                    <p class="text-gray-300 text-xs">120 MB</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group relative rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-square flex items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-400 transition-colors cursor-pointer text-gray-500 hover:text-indigo-600 dark:hover:text-indigo-400">
+                            <div class="text-center">
+                                <i class="ph ph-plus text-3xl mb-2"></i>
+                                <p class="text-sm font-medium">Upload File</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-access" class="view-section hidden fade-up">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">Access Control</h1>
+                    <div class="card overflow-hidden">
+                        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-800">
+                            <h3 class="font-semibold text-lg">Role Permissions</h3>
+                            <p class="text-sm text-gray-500">Manage what different team roles can do.</p>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-gray-50/50 dark:bg-gray-900/50 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="py-4 px-6">Permission</th>
+                                        <th class="py-4 px-6 text-center">Admin</th>
+                                        <th class="py-4 px-6 text-center">Editor</th>
+                                        <th class="py-4 px-6 text-center">Viewer</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm divide-y divide-gray-100 dark:divide-gray-800">
+                                    <tr>
+                                        <td class="py-4 px-6 font-medium text-gray-900 dark:text-gray-300">View Projects</td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4 px-6 font-medium text-gray-900 dark:text-gray-300">Upload Media</td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-gray-300 dark:text-gray-700"><i class="ph ph-minus-circle text-xl"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4 px-6 font-medium text-gray-900 dark:text-gray-300">Delete Projects</td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-gray-300 dark:text-gray-700"><i class="ph ph-minus-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-gray-300 dark:text-gray-700"><i class="ph ph-minus-circle text-xl"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-4 px-6 font-medium text-gray-900 dark:text-gray-300">Manage Billing</td>
+                                        <td class="py-4 px-6 text-center text-indigo-500"><i class="ph-fill ph-check-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-gray-300 dark:text-gray-700"><i class="ph ph-minus-circle text-xl"></i></td>
+                                        <td class="py-4 px-6 text-center text-gray-300 dark:text-gray-700"><i class="ph ph-minus-circle text-xl"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="view-activity" class="view-section hidden fade-up">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">Activity Log</h1>
+                    <div class="card p-6">
+                        <div class="relative border-l-2 border-gray-200 dark:border-gray-800 ml-4 space-y-8 pb-4">
+                            
+                            <div class="relative pl-8">
+                                <span class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center ring-4 ring-white dark:ring-[#121214]">
+                                    <i class="ph ph-upload-simple text-xs"></i>
+                                </span>
+                                <div class="text-sm">
+                                    <p class="font-medium text-gray-900 dark:text-gray-300">Sarah Jenkins uploaded 14 new files</p>
+                                    <p class="text-gray-500 mt-1">To project "Nike Summer Campaign"</p>
+                                    <p class="text-xs text-gray-400 mt-2">10 minutes ago</p>
+                                </div>
+                            </div>
+
+                            <div class="relative pl-8">
+                                <span class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-green-100 text-green-600 flex items-center justify-center ring-4 ring-white dark:ring-[#121214]">
+                                    <i class="ph ph-check text-xs"></i>
+                                </span>
+                                <div class="text-sm">
+                                    <p class="font-medium text-gray-900 dark:text-gray-300">David Miller completed a task</p>
+                                    <p class="text-gray-500 mt-1">Color Grading - Scene 4</p>
+                                    <p class="text-xs text-gray-400 mt-2">2 hours ago</p>
+                                </div>
+                            </div>
+
+                            <div class="relative pl-8">
+                                <span class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center ring-4 ring-white dark:ring-[#121214]">
+                                    <i class="ph ph-user-plus text-xs"></i>
+                                </span>
+                                <div class="text-sm">
+                                    <p class="font-medium text-gray-900 dark:text-gray-300">You invited Emily Ross</p>
+                                    <p class="text-gray-500 mt-1">Role: Art Director</p>
+                                    <p class="text-xs text-gray-400 mt-2">Yesterday, 4:30 PM</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Mobile Sidebar Overlay -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-20 hidden md:hidden"></div>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme setup
+            const themeToggles = document.querySelectorAll('.theme-toggle');
+            const setTheme = (isDark) => {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                }
+                initCharts(); // Refresh charts on theme change
+            };
+
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                setTheme(true);
+            }
+
+            themeToggles.forEach(toggle => {
+                toggle.addEventListener('click', () => {
+                    setTheme(!document.documentElement.classList.contains('dark'));
+                });
+            });
+
+            // Initialization
+            setTimeout(initCharts, 100);
+            setTimeout(() => {
+                document.getElementById('dashboard-view').querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+            }, 200);
+
+            // Logout Logic
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+
+                        // Navigation Logic
+            const sidebarLinks = document.querySelectorAll('.sidebar-link');
+            const viewSections = document.querySelectorAll('.view-section');
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Remove active state from all links
+                    sidebarLinks.forEach(l => {
+                        l.classList.remove('bg-indigo-50', 'dark:bg-indigo-900/30', 'text-indigo-600', 'dark:text-indigo-400');
+                        l.classList.add('text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
+                    });
+                    
+                    // Add active state to clicked link
+                    link.classList.remove('text-gray-700', 'dark:text-gray-300', 'hover:bg-gray-100', 'dark:hover:bg-gray-800');
+                    link.classList.add('bg-indigo-50', 'dark:bg-indigo-900/30', 'text-indigo-600', 'dark:text-indigo-400');
+
+                    // Hide all sections
+                    viewSections.forEach(section => {
+                        section.classList.add('hidden');
+                        section.classList.remove('visible');
+                    });
+
+                    // Show target section
+                    const targetId = link.getAttribute('data-target');
+                    const targetSection = document.getElementById('view-' + targetId);
+                    if (targetSection) {
+                        targetSection.classList.remove('hidden');
+                        setTimeout(() => targetSection.classList.add('visible'), 50);
+                    }
+                    
+                    if (window.innerWidth < 768) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+            // Mobile Sidebar Logic
+            const sidebar = document.getElementById('sidebar');
+            const openSidebarBtn = document.getElementById('open-sidebar');
+            const closeSidebarBtn = document.getElementById('close-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const mobileSidebarLinks = sidebar.querySelectorAll('a');
+
+            const toggleSidebar = () => {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            };
+
+            openSidebarBtn.addEventListener('click', toggleSidebar);
+            closeSidebarBtn.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            
+            mobileSidebarLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 768) {
+                        toggleSidebar();
+                    }
+                });
+            });
+
+            // Charts
+            let barChartInstance = null;
+            let donutChartInstance = null;
+            setTimeout(() => { initCharts(); document.getElementById('dashboard-view').querySelectorAll('.fade-up').forEach(el => el.classList.add('visible')); }, 100);
+
+            function initCharts() {
+                const isDark = document.documentElement.classList.contains('dark');
+                const textColor = isDark ? '#9ca3af' : '#6b7280';
+                const gridColor = isDark ? '#27272a' : '#e5e7eb';
+
+                const barCtx = document.getElementById('dashBarChart');
+                const donutCtx = document.getElementById('dashDonutChart');
+
+                if (!barCtx || !donutCtx || barCtx.offsetParent === null) return;
+
+                if (barChartInstance) barChartInstance.destroy();
+                if (donutChartInstance) donutChartInstance.destroy();
+
+                barChartInstance = new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Delivered Assets',
+                            data: [12, 19, 15, 25, 22, 10, 8],
+                            backgroundColor: '#6366f1',
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor } },
+                            x: { grid: { display: false }, ticks: { color: textColor } }
+                        }
+                    }
+                });
+
+                donutChartInstance = new Chart(donutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Completed', 'In Progress', 'Blocked'],
+                        datasets: [{
+                            data: [78, 15, 7],
+                            backgroundColor: ['#10b981', '#6366f1', '#ef4444'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '80%',
+                        plugins: { legend: { display: false } }
+                    }
+                });
+            };
+        });
+    </script>
+</body>
+</html>
+
+
+
+
