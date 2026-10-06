@@ -72,12 +72,12 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <input id="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Remember me for 30 days</label>
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center shrink-0">
+                            <input id="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded shrink-0">
+                            <label for="remember-me" class="ml-2 block text-xs sm:text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap">Remember me</label>
                         </div>
-                        <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Forgot password?</a>
+                        <a href="#" class="text-xs sm:text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 whitespace-nowrap shrink-0">Forgot password?</a>
                     </div>
 
                     <button type="submit" class="w-full btn-primary py-2.5 rounded-lg font-medium flex justify-center items-center gap-2">
@@ -107,7 +107,7 @@
     </div>
 
     <!-- DASHBOARD WORKSPACE (Initially hidden) -->
-    <div 
+    <div id="dashboard-view" class="hidden"></div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Theme setup
@@ -120,7 +120,9 @@
                     document.documentElement.classList.remove('dark');
                     localStorage.setItem('theme', 'light');
                 }
-                initCharts(); // Refresh charts on theme change
+                if (typeof initCharts !== 'undefined') {
+                    initCharts(); // Refresh charts on theme change
+                }
             };
 
             if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
