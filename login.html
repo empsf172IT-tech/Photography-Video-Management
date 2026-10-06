@@ -37,18 +37,25 @@
 
     <!-- LOGIN STATE -->
     <div id="login-view" class="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-[#0a0a0b] transition-opacity duration-500 overflow-y-auto p-4">
-        <div class="w-full max-w-md">
-            <div class="text-center mb-10">
-                <a href="index.html" class="inline-flex items-center gap-2 mb-6 group">
-                    <div class="w-10 h-10 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
-                        <i class="ph ph-aperture"></i>
-                    </div>
-                </a>
-                <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome back to ChromaIQ</h1>
-                <p class="text-gray-500 mt-2">Sign in to your workspace</p>
-            </div>
+        <!-- Theme Toggle -->
+        <button type="button" class="theme-toggle absolute top-6 right-6 p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <i class="ph-bold ph-moon text-xl dark:hidden"></i>
+            <i class="ph-bold ph-sun text-xl hidden dark:block"></i>
+        </button>
 
+        <div class="w-full max-w-md">
             <div class="card p-8 shadow-xl">
+                <div class="text-center mb-8">
+                    <a href="index.html" class="inline-flex items-center gap-3 mb-6 group">
+                        <div class="w-10 h-10 rounded bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-2xl shadow-lg">
+                            <i class="ph ph-aperture"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">ChromaIQ</span>
+                    </a>
+                    <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Welcome back!</h1>
+                    <p class="text-gray-500 mt-2">Sign in to your workspace</p>
+                </div>
+
                 <form id="login-form" class="space-y-6">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email address</label>
@@ -56,20 +63,28 @@
                     </div>
                     
                     <div>
-                        <div class="flex items-center justify-between mb-1">
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Password</label>
-                            <a href="#" class="text-xs text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Forgot password?</a>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
+                        <div class="relative mb-2">
+                            <input type="password" id="password" value="password123" required class="w-full px-4 py-2 pr-10 bg-gray-50 dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors">
+                            <button type="button" id="toggle-password" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition-colors">
+                                <i class="ph-bold ph-eye text-lg" id="eye-icon"></i>
+                            </button>
                         </div>
-                        <input type="password" value="password123" required class="w-full px-4 py-2 bg-gray-50 dark:bg-[#121214] border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-colors">
                     </div>
 
-                    <div class="flex items-center">
-                        <input id="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Remember me for 30 days</label>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-700 dark:text-gray-300">Remember me for 30 days</label>
+                        </div>
+                        <a href="#" class="text-sm text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Forgot password?</a>
                     </div>
 
-                    <button type="submit" class="w-full btn-primary py-2.5 rounded-lg font-medium flex justify-center items-center">
+                    <button type="submit" class="w-full btn-primary py-2.5 rounded-lg font-medium flex justify-center items-center gap-2">
                         Sign In
+                        <span class="bg-white/20 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 uppercase tracking-wide">
+                            <i class="ph-bold ph-shield-check"></i> Secure
+                        </span>
                     </button>
 
                     <div class="relative my-6">
@@ -81,15 +96,13 @@
                         </div>
                     </div>
 
-                    <button type="button" class="w-full bg-white dark:bg-[#121214] border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 py-2.5 rounded-lg font-medium flex justify-center items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <i class="ph-fill ph-google-logo text-xl"></i> Google SSO
+                    <button type="button" class="w-full group bg-white dark:bg-[#121214] border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 py-2.5 rounded-lg font-medium flex justify-center items-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+                        <i class="ph-fill ph-google-logo text-xl group-hover:scale-110 group-hover:text-indigo-500 transition-transform duration-300"></i> Google SSO
                     </button>
                 </form>
             </div>
             
-            <p class="text-center text-sm text-gray-500 mt-8">
-                Don't have a workspace? <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400">Create an account</a>
-            </p>
+
         </div>
     </div>
 
@@ -124,6 +137,22 @@
             const loginForm = document.getElementById('login-form');
             const loginView = document.getElementById('login-view');
             const dashboardView = document.getElementById('dashboard-view');
+            
+            // Password Toggle
+            const togglePasswordBtn = document.getElementById('toggle-password');
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+            if (togglePasswordBtn && passwordInput && eyeIcon) {
+                togglePasswordBtn.addEventListener('click', () => {
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        eyeIcon.classList.replace('ph-eye', 'ph-eye-slash');
+                    } else {
+                        passwordInput.type = 'password';
+                        eyeIcon.classList.replace('ph-eye-slash', 'ph-eye');
+                    }
+                });
+            }
 
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
